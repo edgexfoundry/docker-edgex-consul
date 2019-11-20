@@ -58,7 +58,7 @@ pipeline {
                                 script {
                                     docker.withRegistry("https://${env.DOCKER_REGISTRY}:10004") {
                                         image_amd64.push(env.GIT_COMMIT)
-                                        image_amd64.push('1.1.1')
+                                        image_amd64.push('master')
                                     }
                                 }
                             }
@@ -87,7 +87,7 @@ pipeline {
                                 script {
                                     docker.withRegistry("https://${env.DOCKER_REGISTRY}:10004") {
                                         image_arm64.push(env.GIT_COMMIT)
-                                        image_arm64.push('1.1.1')
+                                        image_arm64.push('master')
                                     }
                                 }
                             }
@@ -100,8 +100,8 @@ pipeline {
         stage('Clair Image Scan') {
             when { expression { edgex.isReleaseStream() } }
             steps {
-                edgeXClair("${env.DOCKER_REGISTRY}:10004/docker-edgex-consul:1.1.1")
-                edgeXClair("${env.DOCKER_REGISTRY}:10004/docker-edgex-consul-arm64:1.1.1")
+                edgeXClair("${env.DOCKER_REGISTRY}:10004/docker-edgex-consul:master")
+                edgeXClair("${env.DOCKER_REGISTRY}:10004/docker-edgex-consul-arm64:master")
             }
         }
     }
