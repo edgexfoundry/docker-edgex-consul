@@ -1,6 +1,5 @@
 #!/bin/sh -ex
 
-# check that the root CA exists, the vault and kong certs exist
-test -f /vault/config/pki/EdgeXFoundryCA/EdgeXFoundryCA.pem
-test -f /vault/config/pki/EdgeXFoundryCA/edgex-vault.pem
-test -f /vault/config/pki/EdgeXFoundryCA/edgex-kong.pem
+# check that the security-secrets-setup complete
+# the new way of checking just the sentinel files which will have all TLS assets
+test -f /tmp/edgex/secrets/ca/.security-secrets-setup.complete
