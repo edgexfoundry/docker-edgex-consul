@@ -16,6 +16,27 @@
 ###############################################################################
 # Consul image for EdgeX Foundry
 
+# Docker image for Golang health CLI application
+FROM golang:1.12-alpine AS builder
+
+ENV GO111MODULE=on
+WORKDIR /go/src/github.com/edgexfoundry/docker-edgex-consul
+
+# The main mirrors are giving us timeout issues on builds periodically.
+# So we can try these.
+
+RUN sed -e 's/dl-cdn[.]alpinelinux.org/nl.alpinelinux.org/g' -i~ /etc/apk/repositories
+
+RUN apk update && apk add pkgconfig build-base git
+
+COPY go.mod .
+
+RUN go mod download
+
+COPY . .
+
+RUN make build
+
 # consul upstream is based on alpine
 FROM consul:1.3.1
 
@@ -26,6 +47,7 @@ LABEL license='SPDX-License-Identifier: Apache-2.0' \
 RUN apk add postgresql-client jq curl
 
 COPY scripts /consul/scripts
+COPY --from=builder /go/src/github.com/edgexfoundry/docker-edgex-consul/health /consul/scripts/health
 
 # be sneaky and sneak jq into the scripts dir for now, eventually need a 
 # statically compiled go program so we don't have to deal with musl/glibc issues

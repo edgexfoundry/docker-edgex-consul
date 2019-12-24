@@ -1,0 +1,10 @@
+The following open source projects are referenced by Health Go:
+
+mitchellh/go-homedir (MIT License) https://github.com/mitchellh/go-homedir
+https://github.com/mitchellh/go-homedir/blob/master/LICENSE
+
+spf13/cobra (Apache License 2.0) https://github.com/spf13/cobra
+https://github.com/spf13/cobra/blob/master/LICENSE.txt
+
+spf13/viper (MIT License) https://github.com/spf13/viper
+https://github.com/spf13/viper/blob/master/LICENSE

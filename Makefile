@@ -25,7 +25,15 @@ DOCKER_TAG=$(VERSION)
 
 GIT_SHA=$(shell git rev-parse HEAD)
 
-build:
+GO=CGO_ENABLED=0 GO111MODULE=on go
+GOFLAGS=-ldflags "-X github.com/edgexfoundry/edgex-go.Version=$(VERSION)"
+
+
+build: health
+
+.PHONY: health
+health:
+	$(GO) build $(GOFLAGS) -o $@ ./command/health
 
 docker: $(DOCKERS)
 
