@@ -38,13 +38,13 @@ COPY . .
 RUN make build
 
 # consul upstream is based on alpine
-FROM consul:1.3.1
+FROM consul:1.7.0
 
 LABEL license='SPDX-License-Identifier: Apache-2.0' \
     copyright='Copyright (c) 2019: Canonical'
 
 # for pg_isready to check when kong-db is ready
-RUN apk add postgresql-client jq curl
+RUN apk add postgresql-client jq=1.6-r0 curl=7.64.0-r3
 
 COPY scripts /consul/scripts
 COPY --from=builder /go/src/github.com/edgexfoundry/docker-edgex-consul/health /consul/scripts/health
