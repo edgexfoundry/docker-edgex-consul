@@ -1,5 +1,6 @@
 ###############################################################################
 # Copyright 2019 Canonical.
+# Copyright 2019 Intel Corporation.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -41,7 +42,8 @@ RUN make build
 FROM consul:1.7.0
 
 LABEL license='SPDX-License-Identifier: Apache-2.0' \
-    copyright='Copyright (c) 2019: Canonical'
+    copyright='Copyright (c) 2019: Canonical; \
+Copyright (c) 2019: Intel Corporation'
 
 # for pg_isready to check when kong-db is ready
 RUN apk add postgresql-client jq=1.6-r0 curl=7.64.0-r3
@@ -58,3 +60,6 @@ RUN cp /usr/lib/libonig.so* /consul/scripts/
 # consul ports
 EXPOSE 8500
 EXPOSE 8400
+
+# Override consul defaults so that container runs in production mode by default
+CMD [ "agent", "-ui", "-bootstrap", "-server", "-client", "0.0.0.0" ]
