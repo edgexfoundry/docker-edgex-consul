@@ -37,13 +37,6 @@ health:
 
 docker: $(DOCKERS)
 
-clean:
-
-test:
-
-run:
-	./bin/edgex-consul-launch.sh
-
 edgex-consul:
 	 docker build \
 		-f Dockerfile \
