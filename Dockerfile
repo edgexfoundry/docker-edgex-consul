@@ -46,7 +46,7 @@ LABEL license='SPDX-License-Identifier: Apache-2.0' \
 Copyright (c) 2019: Intel Corporation'
 
 # for pg_isready to check when kong-db is ready
-RUN apk add postgresql-client jq=1.6-r0 curl=7.64.0-r3
+RUN apk add postgresql-client
 
 # Make sure the default directories are created for consul
 RUN mkdir -p /consul/scripts && mkdir -p /consul/config
@@ -55,12 +55,6 @@ RUN mkdir -p /consul/scripts && mkdir -p /consul/config
 COPY scripts /edgex/scripts
 COPY config /edgex/config
 COPY --from=builder /go/src/github.com/edgexfoundry/docker-edgex-consul/health /edgex/scripts/health
-
-# be sneaky and sneak jq into the scripts dir for now, eventually need a 
-# statically compiled go program so we don't have to deal with musl/glibc issues
-# but for now everything is alpine and thus everything is musl
-RUN cp /usr/bin/jq /consul/scripts/jq
-RUN cp /usr/lib/libonig.so* /consul/scripts/
 
 # consul ports
 EXPOSE 8500
