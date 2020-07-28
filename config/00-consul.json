@@ -1,3 +1,4 @@
 {
-    "enable_local_script_checks": true
+    "enable_local_script_checks": true,
+    "disable_update_check": true
 }
