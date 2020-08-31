@@ -39,7 +39,7 @@ COPY . .
 RUN make build
 
 # consul upstream is based on alpine
-FROM consul:1.7.2
+FROM consul:1.8.3
 
 LABEL license='SPDX-License-Identifier: Apache-2.0' \
     copyright='Copyright (c) 2019: Canonical; \
