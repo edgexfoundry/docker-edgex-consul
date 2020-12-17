@@ -1,4 +1,4 @@
-###############################################################################
+#
 # Copyright 2019 Canonical.
 # Copyright 2019 Intel Corporation.
 #
@@ -14,11 +14,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
-###############################################################################
+
 # Consul image for EdgeX Foundry
 
 # Docker image for Golang health CLI application
-FROM golang:1.15-alpine AS builder
+FROM golang:1.15-alpine3.12 AS builder
 
 ENV GO111MODULE=on
 WORKDIR /go/src/github.com/edgexfoundry/docker-edgex-consul
@@ -28,7 +28,7 @@ WORKDIR /go/src/github.com/edgexfoundry/docker-edgex-consul
 
 RUN sed -e 's/dl-cdn[.]alpinelinux.org/nl.alpinelinux.org/g' -i~ /etc/apk/repositories
 
-RUN apk update && apk add pkgconfig build-base git
+RUN apk add --update --no-cache pkgconfig build-base git
 
 COPY go.mod .
 
@@ -43,10 +43,10 @@ FROM consul:1.8.3
 
 LABEL license='SPDX-License-Identifier: Apache-2.0' \
     copyright='Copyright (c) 2019: Canonical; \
-Copyright (c) 2019: Intel Corporation'
+    Copyright (c) 2019: Intel Corporation'
 
 # for pg_isready to check when kong-db is ready
-RUN apk add postgresql-client
+RUN apk add --update --no-cache postgresql-client
 
 # Make sure the default directories are created for consul
 RUN mkdir -p /consul/scripts && mkdir -p /consul/config
